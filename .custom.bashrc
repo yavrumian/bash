@@ -16,6 +16,15 @@ export BROWSER=wslview
 
 alias clr='clear'
 alias tf='terraform'
-alias tfp='terraform plan'
-alias tfa='terraform apply'
-alias tfaa='terraform apply -auto-approve'
+alias tfp='tf plan'
+alias tfa='tf apply'
+alias tfaa='tfa -auto-approve'
+alias tfwl='tf workspace list'
+
+awsprof() {
+    export AWS_PROFILE=$1
+}
+
+tfws() {
+    tf workspace select $1
+}
