@@ -15,3 +15,7 @@ export BROWSER=wslview
 
 
 alias clr='clear'
+alias tf='terraform'
+alias tfp='terraform plan'
+alias tfa='terraform apply'
+alias tfaa='terraform apply -auto-approve'
