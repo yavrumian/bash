@@ -92,7 +92,6 @@ chb() {
 }
 
 comm() {
-    echo $1
     git commit -am "${1}"
 }
 
