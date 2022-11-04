@@ -92,9 +92,8 @@ chb() {
 }
 
 comm() {
-    git commit -am "${1}"
+	git commit -am "${1}"
 }
-
 inst(){
 	sudo apt install -y $1
 }
