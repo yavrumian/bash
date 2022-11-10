@@ -97,4 +97,4 @@ comm() {
 inst(){
 	sudo apt install -y $1
 }
-
+figlet -s Yavrumian | lolcat; echo -e "May the Force be With You and Father of Understanding Guide Us! \n" | lolcat
