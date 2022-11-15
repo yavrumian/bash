@@ -1,0 +1,15 @@
+packadd! dracula
+set number
+syntax on
+colorscheme dracula
+set cursorline
+set cursorcolumn
+set tabstop=4
+set nobackup
+set incsearch
+set ignorecase
+set smartcase
+set showcmd
+set showmatch
+set wildmenu
+set wildmode=list:longest
