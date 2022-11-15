@@ -13,3 +13,4 @@ set showcmd
 set showmatch
 set wildmenu
 set wildmode=list:longest
+runtime! ftplugin/man.vim
