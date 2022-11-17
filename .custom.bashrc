@@ -97,5 +97,13 @@ comm() {
 inst(){
 	sudo apt install -y $1
 }
+42c(){
+	gcc -Wall -Wextra -Werror $@
+}
+
+norm(){
+	norminette -R CheckForbiddenSourceHeader $@
+}
 figlet -s Yavrumian | lolcat; echo -e "May the Force be With You and Father of Understanding Guide Us! \n" | lolcat
 export PATH=$PATH:"/mnt/c/Users/vahe.yavrumyan/AppData/Local/Programs/Microsoft VS Code/bin/"
+
