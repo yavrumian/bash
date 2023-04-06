@@ -1,11 +1,23 @@
 function timer_now {
     date +%s%N
 }
-
 function timer_start {
     timer_start=${timer_start:-$(timer_now)}
 }
 
+__kube_ps1()
+{
+		CYA='\033[0;36m'
+		RED='\033[0;31m'
+		LCYA='\033[1;36m'
+		NC='\033[0m'
+		# Get current context
+		CONTEXT=$(cat ~/.kube/config | grep "current-context:" | sed "s/current-context: //")
+	    if [ -n "$CONTEXT" ] && [ "$CONTEXT" != "\"\"" ]; then
+			NS=$(kubectl config view --minify -o jsonpath='{..namespace}')
+	        echo -e "(${CYA}${CONTEXT}:${LCYA} ${NS}${NC})"
+		fi
+}
 function timer_stop {
     local delta_us=$((($(timer_now) - $timer_start) / 1000))
     local us=$((delta_us % 1000))
@@ -46,9 +58,8 @@ set_prompt () {
     # Add the ellapsed time and current date
     timer_stop
     PS+="($timer_show) "
-
     # Print the working directory and prompt marker in blue, and reset
- PS1="$PS\[\033[38;5;87m\]\u\[$(tput sgr0)\]@\[$(tput sgr0)\]\[\033[38;5;10m\]\h\[$(tput sgr0)\] [\[$(tput sgr0)\]\[\033[38;5;11m\]\w\[$(tput sgr0)\]] \[$(tput sgr0)\]\[\033[38;5;1m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/')\[$(tput sgr0)\] \[$(tput sgr0)\]\[\033[38;5;10m\]\\$\[$(tput sgr0)\]> \[$(tput sgr0)\]"
+ PS1="$PS\[\033[38;5;87m\]\u\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;10m\]\[$(tput sgr0)\] [\[$(tput sgr0)\]\[\033[38;5;11m\]\w\[$(tput sgr0)\]] \$(__kube_ps1) \[$(tput sgr0)\]\[\033[38;5;1m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/')\[$(tput sgr0)\] \[$(tput sgr0)\]\[\033[38;5;10m\]\\$\[$(tput sgr0)\]> \[$(tput sgr0)\]"
  
     # the text color to the default.
 }
@@ -63,8 +74,9 @@ HISTSIZE=1000
 HISTFILESIZE=2000
 
 #terraform and aws completions
-complete -C '/usr/local/bin/aws_completer' aws
+complete C '/usr/local/bin/aws_completer' aws
 complete -C /usr/bin/terraform terraform
+source <(kubectl completion bash)
 
 export HISTCONTROL=ignoredups
 export HISTIGNORE='clear:clr'
@@ -77,7 +89,9 @@ alias tfp='tf plan'
 alias tfa='tf apply'
 alias tfaa='tfa -auto-approve'
 alias tfwl='tf workspace list'
-
+alias k=kubectl
+alias kc='export KUBE_EDITOR="code -w"'
+complete -o default -F __start_kubectl k
 
 awsprof() {
     export AWS_PROFILE=$1
@@ -106,6 +120,7 @@ norm(){
 }
 figlet -s Yavrumian | lolcat; echo -e "May the Force be With You and Father of Understanding Guide Us! \n" | lolcat
 export PATH=$PATH:"/mnt/c/Users/vahe.yavrumyan/AppData/Local/Programs/Microsoft VS Code/bin/"
+bind "set completion-ignore-case on"
 
-sudo service docker start > /dev/null
+# sudo service docker start > /dev/null
 export PATH=/home/yavrumian/.local/bin:/home/yavrumian/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Users/vahe.yavrumyan/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/vahe.yavrumyan/AppData/Local/Programs/Microsoft\ VS\ Code/bin:/mnt/c/Users/vahe.yavrumyan/AppData/Local/Programs/Microsoft\ VS\ Code/bin/:/home/yavrumian/.local/bin1~:/mnt/c/Users/vahe.yavrumyan/AppData/Local/Programs/Microsoft\ VS\ Code/bin/:/home/yavrumian/.linkerd2/bin
