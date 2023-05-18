@@ -90,7 +90,10 @@ alias tfa='tf apply'
 alias tfaa='tfa -auto-approve'
 alias tfwl='tf workspace list'
 alias k=kubectl
-alias kc='export KUBE_EDITOR="code -w"'
+alias kc='export KUBE_EDITOR="code -w"; echo "Kube Editor set to VSCode"'
+alias kv='export KUBE_EDITOR="Vim"; echo "Kube Editor set to Vim"'
+alias kd='kubectl describe'
+complete -o default -F __start_kubectl kd
 complete -o default -F __start_kubectl k
 
 awsprof() {
