@@ -82,7 +82,7 @@ export HISTCONTROL=ignoredups
 export HISTIGNORE='clear:clr'
 export BROWSER=wslview
 
-
+alias la='ls -la'
 alias clr='clear'
 alias tf='terraform'
 alias tfp='tf plan'
@@ -91,8 +91,10 @@ alias tfaa='tfa -auto-approve'
 alias tfwl='tf workspace list'
 alias k=kubectl
 alias kc='export KUBE_EDITOR="code -w"; echo "Kube Editor set to VSCode"'
-alias kv='export KUBE_EDITOR="Vim"; echo "Kube Editor set to Vim"'
+alias kv='export KUBE_EDITOR="vim"; echo "Kube Editor set to Vim"'
 alias kd='kubectl describe'
+alias kls='k get po'
+
 complete -o default -F __start_kubectl kd
 complete -o default -F __start_kubectl k
 
@@ -116,6 +118,9 @@ inst(){
 }
 42c(){
 	gcc -Wall -Wextra -Werror $@
+}
+kx(){
+    k exec $1 -it -- $2 
 }
 
 norm(){

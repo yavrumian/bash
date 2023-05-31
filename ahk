@@ -1,0 +1,1 @@
+/home/yavrumian/win/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/
