@@ -108,6 +108,7 @@ export BROWSER=wslview
 
 # Define aliases
 alias la='ls -la'
+alias cp='cp -r'
 alias clr='clear'
 alias tf='terraform'
 alias tfp='tf plan'
@@ -118,11 +119,23 @@ alias k=kubectl
 alias kc='export KUBE_EDITOR="code -w"; echo "Kube Editor set to VSCode"'
 alias kv='export KUBE_EDITOR="vim"; echo "Kube Editor set to Vim"'
 alias kd='kubectl describe'
-alias kls='k get po'
+alias docker='/mnt/c/Program\ Files/Docker/Docker/resources/bin/docker.exe'
 
 # Enable autocompletion for kubectl commands
 complete -o default -F __start_kubectl kd
 complete -o default -F __start_kubectl k
+
+kls() {
+  if [ $# -eq 0 ]; then
+    kubectl get po
+  else
+    kubectl get "$@"
+  fi
+}
+
+kya() {
+    kubectl get "$@" -o yaml | kubectl neat
+}
 
 # Set AWS profile
 awsprof() {
@@ -169,12 +182,24 @@ norm(){
     norminette -R CheckForbiddenSourceHeader $@
 }
 
+## SCRYPTON ##
+tfdev(){
+    tf $@ -var-file=envs/development/terraform.tfvars
+}
+
+tfprd(){
+    tf $@ -var-file=envs/production/terraform.tfvars
+}
+
+alias initdev='tf init -backend-config=envs/development/backend.hcl -reconfigure'
+alias initprd='tf init -backend-config=envs/production/backend.hcl -reconfigure'
+
 # Display a customized welcome message
 figlet -s Yavrumian | lolcat
 echo -e "May the Force be With You and Father of Understanding Guide Us! \n" | lolcat
 
 # Add VS Code binary path to the PATH environment variable
-export PATH=$PATH:"/mnt/c/Users/vahe.yavrumyan/AppData/Local/Programs/Microsoft VS Code/bin/"
+# export PATH=$PATH:"/mnt/c/Users/vahe.yavrumyan/AppData/Local/Programs/Microsoft VS Code/bin/"
 
 # Set case-insensitive completion
 bind "set completion-ignore-case on"
