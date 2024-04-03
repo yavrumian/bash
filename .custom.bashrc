@@ -1,62 +1,20 @@
 #!/bin/bash
 
-# Function to get the current timestamp in seconds and nanoseconds
-timer_now() {
-    date +%s%N
-}
-
-# Function to start the timer
-timer_start() {
-    timer_start=${timer_start:-$(timer_now)}
-}
-
 # Function to display the current Kubernetes context and namespace in the prompt
 __kube_ps1() {
-    CYA='\033[0;36m'
-    RED='\033[0;31m'
-    LCYA='\033[1;36m'
-    NC='\033[0m'
+    CYA='\[\033[0;36m\]'
+    RED='\[\033[0;31m\]'
+    LCYA='\[\033[1;36m\]'
+    NC='\[\033[0m\]'
     
     # Get current context
     CONTEXT=$(grep -oP '(?<=current-context: ).*' ~/.kube/config)
     
     if [ -n "$CONTEXT" ] && [ "$CONTEXT" != "\"\"" ]; then
         NS=$(kubectl config view --minify -o jsonpath='{..namespace}')
-        echo -e "(${CYA}${CONTEXT}:${LCYA} ${NS}${NC})"
+        echo -e "${CYA}${CONTEXT}:${LCYA} ${NS}${NC}"
+        # printf "(${CONTEXT})"
     fi
-}
-
-# Function to stop the timer and calculate the elapsed time
-timer_stop() {
-    if [[ -z "$timer_start" ]]; then
-        return
-    fi
-    
-    local delta_us=$((($(timer_now) - $timer_start) / 1000))
-    local us=$((delta_us % 1000))
-    local ms=$(((delta_us / 1000) % 1000))
-    local s=$(((delta_us / 1000000) % 60))
-    local m=$(((delta_us / 60000000) % 60))
-    local h=$((delta_us / 3600000000))
-    
-    # Goal: always show around 3 digits of accuracy
-    if ((h > 0)); then
-        timer_show=${h}h${m}m
-    elif ((m > 0)); then
-        timer_show=${m}m${s}s
-    elif ((s >= 10)); then
-        timer_show=${s}.$((ms / 100))s
-    elif ((s > 0)); then
-        timer_show=${s}.$(printf %03d $ms)s
-    elif ((ms >= 100)); then
-        timer_show=${ms}ms
-    elif ((ms > 0)); then
-        timer_show=${ms}.$((us / 100))ms
-    else
-        timer_show=${us}us
-    fi
-    
-    unset timer_start
 }
 
 # Function to set the custom prompt
@@ -75,17 +33,14 @@ set_prompt() {
     else
         PS+="$Red$FancyX "
     fi
-
-    # Add the elapsed time and current date
-    timer_stop
-    PS+="($timer_show) "
     
+    KUBE=$(__kube_ps1)
+
     # Print the working directory, Kubernetes context and namespace, and Git branch in the prompt
-    PS1="$PS\[\033[38;5;87m\]\u\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;10m\]\[$(tput sgr0)\] [\[$(tput sgr0)\]\[\033[38;5;11m\]\w\[$(tput sgr0)\]] \$(__kube_ps1) \[$(tput sgr0)\]\[\033[38;5;1m\]\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/')\[$(tput sgr0)\] \[$(tput sgr0)\]\[\033[38;5;10m\]\\$\[$(tput sgr0)\]> \[$(tput sgr0)\]"
+    PS1="$PS \[\033[38;5;87m\]\u\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;10m\]\[$(tput sgr0)\] [\[$(tput sgr0)\]\[\033[38;5;11m\]\w\[$(tput sgr0)\]] $KUBE\[$(tput sgr0)\]\[\033[38;5;1m\] \$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/')\[$(tput sgr0)\] \[$(tput sgr0)\]\[\033[38;5;10m\]\\$\[$(tput sgr0)\]> \[$(tput sgr0)\]"
 }
 
 # Start the timer when a command is executed
-trap 'timer_start' DEBUG
 PROMPT_COMMAND='set_prompt'
 
 ###################### END OF BASH PROMPT CONFIG ###########################
@@ -131,6 +86,10 @@ kls() {
   else
     kubectl get "$@"
   fi
+}
+
+ksec() {
+  kubectl get secret $@ -o json | jq -r '.data | to_entries | .[] | "\(.key): \(.value | @base64d)"'
 }
 
 kya() {
