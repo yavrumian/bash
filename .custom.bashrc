@@ -22,6 +22,9 @@ set_prompt() {
     Last_Command=$? # Must come first!
     Red='\[\e[01;31m\]'
     Green='\[\e[01;32m\]'
+    Blue='\[\033[38;5;87m\]'
+    Yellow='\[\033[38;5;11m\]'
+    DarkRed='\[\033[38;5;1m\]'
     Reset='\[\e[00m\]'
     FancyX='\342\234\227'
     Checkmark='\342\234\223'
@@ -37,7 +40,8 @@ set_prompt() {
     KUBE=$(__kube_ps1)
 
     # Print the working directory, Kubernetes context and namespace, and Git branch in the prompt
-    PS1="$PS \[\033[38;5;87m\]\u\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;10m\]\[$(tput sgr0)\] [\[$(tput sgr0)\]\[\033[38;5;11m\]\w\[$(tput sgr0)\]] $KUBE\[$(tput sgr0)\]\[\033[38;5;1m\] \$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/')\[$(tput sgr0)\] \[$(tput sgr0)\]\[\033[38;5;10m\]\\$\[$(tput sgr0)\]> \[$(tput sgr0)\]"
+    PS1="$PS $Blue\u$Reset [$Yellow\w$Reset] $KUBE $DarkRed\$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/') $Green\$$Reset> "
+    # PS1="$PS \[\033[38;5;87m\]\u\[$(tput sgr0)\]\[$(tput sgr0)\]\[\033[38;5;10m\]\[$(tput sgr0)\] [\[$(tput sgr0)\]\[\033[38;5;11m\]\w\[$(tput sgr0)\]] $KUBE\[$(tput sgr0)\]\[\033[38;5;1m\] \$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/')\[$(tput sgr0)\] \[$(tput sgr0)\]\[\033[38;5;10m\]\\$\[$(tput sgr0)\]> \[$(tput sgr0)\]"
 }
 
 # Start the timer when a command is executed
