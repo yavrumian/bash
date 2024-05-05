@@ -158,14 +158,14 @@ alias initdev='tf init -backend-config=envs/development/backend.hcl -reconfigure
 alias initprd='tf init -backend-config=envs/production/backend.hcl -reconfigure'
 
 # Display a customized welcome message
-figlet -s Yavrumian | lolcat
+figlet -s x | lolcat
 echo -e "May the Force be With You and Father of Understanding Guide Us! \n" | lolcat
 
 # Add VS Code binary path to the PATH environment variable
-# export PATH=$PATH:"/mnt/c/Users/vahe.yavrumyan/AppData/Local/Programs/Microsoft VS Code/bin/"
+# export PATH=$PATH:"/mnt/c/Users/user/AppData/Local/Programs/Microsoft VS Code/bin/"
 
 # Set case-insensitive completion
 bind "set completion-ignore-case on"
 
 # Set additional paths in the PATH environment variable
-export PATH=/home/yavrumian/.local/bin:/home/yavrumian/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Users/vahe.yavrumyan/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/vahe.yavrumyan/AppData/Local/Programs/Microsoft\ VS\ Code/bin:/mnt/c/Users/vahe.yavrumyan/AppData/Local/Programs/Microsoft\ VS\ Code/bin/:/home/yavrumian/.local/bin1~:/mnt/c/Users/vahe.yavrumyan/AppData/Local/Programs/Microsoft\ VS\ Code/bin/:/home/yavrumian/.linkerd2/bin
+export PATH=/home/x/.local/bin:/home/x/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Users/user/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/user/AppData/Local/Programs/Microsoft\ VS\ Code/bin:/home/x/.local/bin1~:/home/x/.linkerd2/bin
