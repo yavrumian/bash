@@ -168,4 +168,4 @@ echo -e "May the Force be With You and Father of Understanding Guide Us! \n" | l
 bind "set completion-ignore-case on"
 
 # Set additional paths in the PATH environment variable
-export PATH=/home/x/.local/bin:/home/x/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Users/user/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/user/AppData/Local/Programs/Microsoft\ VS\ Code/bin:/home/x/.local/bin1~:/home/x/.linkerd2/bin
+export PATH=/home/x/.krew/bin:/home/x/.local/bin:/home/x/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Users/user/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/user/AppData/Local/Programs/Microsoft\ VS\ Code/bin:/home/x/.local/bin1~:/home/x/.linkerd2/bin
