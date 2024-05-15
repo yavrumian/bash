@@ -3,6 +3,10 @@ USER=$(whoami)
 echo "This is your username: $USER, please enter below your Windows username in case of using WSL:"
 read winuser
 
+# Detect if env is on WSL
+ls /proc/sys/fs/binfmt_misc/WSLInterop
+isWSL=$(( $? == 0 ? 1 : 0 ))
+
 cp .bashrc .custom.bashrc
 sed -i "s/USERNAME/$USER/g" ".custom.bashrc"
 sed -i "s/WINUSR/$winuser/g" ".custom.bashrc"
@@ -43,7 +47,7 @@ echo -e "\n"
 # Install WSL-Hello-sudo
 echo -e "Installing WSL-Hello-sudo\n"
 ls /usr/share/pam-configs/wsl-hello
-if [ $? != 0 ]
+if [ $? != 0 ] && [ "$isWSL" = 1 ]
 then
 	wget http://github.com/nullpo-head/WSL-Hello-sudo/releases/latest/download/release.tar.gz
 	tar xvf release.tar.gz
