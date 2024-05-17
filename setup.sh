@@ -78,28 +78,28 @@ echo -e "\n"
 
 # Install kubens
 echo -e "Installing kubens"
-kubectl krew list | grep ns
+/home/USERNAME/.krew/bin/krew list | grep ns
 if [ $? != 0 ]
 then
-	kubectl krew install ns
+	/home/USERNAME/.krew/bin/krew install ns
 fi
 echo -e "\n"
 
 # Install kubens
 echo -e "Installing kubectx"
-kubectl krew list | grep ctx
+/home/USERNAME/.krew/bin/krew list | grep ctx
 if [ $? != 0 ]
 then
-	kubectl krew install ctx
+	/home/USERNAME/.krew/bin/krew install ctx
 fi
 echo -e "\n"
 
 # Install neat
 echo -e "Installing neat"
-kubectl krew list | grep neat
+/home/USERNAME/.krew/bin/krew list | grep neat
 if [ $? != 0 ]
 then
-	kubectl krew install neat
+	/home/USERNAME/.krew/bin/krew install neat
 fi
 echo -e "\n"
 
